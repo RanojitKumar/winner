@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pirganj24 Quiz Winner Picker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Pirganj24 Quiz Winner Picker</h1>
+        <form id="participantForm">
+            <label for="participantList">Enter Participants' Names (Each on a new line):</label>
+            <textarea id="participantList" rows="4" placeholder="Participant1\nParticipant2\nParticipant3"></textarea>
+            <br>
+            <button type="button" onclick="pickWinner()">Pick a Winner</button>
+        </form>
+        <div id="spinnerContainer">
+            <div id="spinner"></div>
+        </div>
+        <div id="winnerDisplay"></div>
+    </div>
+    <script>
+        function pickWinner() {
+            // Get the participants' names from the textarea and split into an array by newline
+            var participants = document.getElementById('participantList').value.split('\n');
+            
+            // Remove leading and trailing spaces from each participant's name
+            participants = participants.map(function (name) {
+                return name.trim();
+            });
+
+            // Remove empty entries
+            participants = participants.filter(function (name) {
+                return name !== '';
+            });
+
+            if (participants.length === 0) {
+                alert('Please enter at least one participant.');
+                return;
+            }
+
+            // Add spinning effect
+            var spinner = document.getElementById('spinner');
+            spinner.classList.add('spin');
+
+            // Randomly select a winner after spinning animation
+            setTimeout(function() {
+                var randomIndex = Math.floor(Math.random() * participants.length);
+                var winner = participants[randomIndex];
+
+                // Display the winner
+                document.getElementById('winnerDisplay').innerHTML = '<h2>The winner is: ' + winner + '</h2>';
+                document.getElementById('winnerDisplay').innerHTML += '<p>Congratulations! 🎉 You are the lucky winner!</p>';
+
+                // Remove spinning effect
+                spinner.classList.remove('spin');
+            }, 3000); // Spin for 3 seconds
+        }
+    </script>
+</body>
+</html>
